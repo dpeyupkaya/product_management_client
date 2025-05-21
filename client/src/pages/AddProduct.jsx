@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ProductForm from "../components/ProductForm";
 
 function AddProduct() {
   const [name, setName] = useState("");
@@ -12,12 +13,16 @@ function AddProduct() {
     setError(null);
 
     try {
+      const token = localStorage.getItem("accessToken");  // Token'ı al
+
       const response = await fetch("https://localhost:7172/api/products", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`    // Token'ı header'a ekle
+        },
         body: JSON.stringify({ name, price: Number(price) }),
       });
-
 
       if (!response.ok) {
         throw new Error("API isteği başarısız oldu.");
@@ -37,27 +42,17 @@ function AddProduct() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Ürün adı"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        required
+   <div className="p-4">
+      <ProductForm
+        name={name}
+        setName={setName}
+        price={price}
+        setPrice={setPrice}
+        handleSubmit={handleSubmit}
+        loading={loading}
+        error={error}
       />
-      <input
-        type="number"
-        placeholder="Fiyat"
-        value={price}
-        onChange={(e) => setPrice(e.target.value)}
-        required
-        min="0"
-      />
-      <button type="submit" disabled={loading}>
-        {loading ? "Ekleniyor..." : "Ürün Ekle"}
-      </button>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-    </form>
+    </div>
   );
 }
 
