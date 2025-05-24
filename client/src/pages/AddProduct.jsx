@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ProductForm from "../components/ProductForm";
 
 function AddProduct() {
@@ -7,19 +7,27 @@ function AddProduct() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  // Component yüklendiğinde token'ı kontrol et
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    console.log("Token on component load:", token);
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const token = localStorage.getItem("token");
+    console.log("Token on submit:", token); // Token'ı burada da yazdır
+
     setLoading(true);
     setError(null);
 
     try {
-      const token = localStorage.getItem("accessToken");  // Token'ı al
-
       const response = await fetch("https://localhost:7172/api/products", {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`    // Token'ı header'a ekle
+          "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify({ name, price: Number(price) }),
       });
@@ -42,7 +50,7 @@ function AddProduct() {
   };
 
   return (
-   <div className="p-4">
+    <div className="p-4">
       <ProductForm
         name={name}
         setName={setName}

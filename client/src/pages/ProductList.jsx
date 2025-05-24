@@ -9,7 +9,7 @@ function ProductList() {
   const [updatedName, setUpdatedName] = useState("");
   const [updatedPrice, setUpdatedPrice] = useState("");
 
-  const token = localStorage.getItem("accessToken"); // Token'ı buradan alıyoruz
+  const token = localStorage.getItem("token"); // Token'ı buradan alıyoruz
 
   useEffect(() => {
     if (!token) {
@@ -17,7 +17,7 @@ function ProductList() {
       return;
     }
 
-    fetch("https://localhost:7172/api/product/myproducts", {  // -> myproducts endpointi
+    fetch("https://localhost:7172/api/products/myproducts", {  // -> myproducts endpointi
       headers: {
         Authorization: `Bearer ${token}`,  // Header'da token gönder
       },
@@ -64,7 +64,7 @@ function ProductList() {
       price: parseFloat(updatedPrice),
     };
 
-    fetch(`https://localhost:7172/api/product/${selectedProduct.id}`, {
+    fetch(`https://localhost:7172/api/products/${selectedProduct.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -95,7 +95,7 @@ function ProductList() {
 
     if (!window.confirm("Bu ürünü silmek istediğinize emin misiniz?")) return;
 
-    fetch(`https://localhost:7172/api/product/${id}`, {
+    fetch(`https://localhost:7172/api/products/${id}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`, // Token header'a eklendi
