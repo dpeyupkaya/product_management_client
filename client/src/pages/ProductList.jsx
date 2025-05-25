@@ -98,7 +98,7 @@ function ProductList() {
     fetch(`https://localhost:7172/api/products/${id}`, {
       method: "DELETE",
       headers: {
-        Authorization: `Bearer ${token}`, // Token header'a eklendi
+        Authorization: `Bearer ${token}`, 
       },
     })
       .then((res) => {

@@ -1,79 +1,86 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
 import React from "react";
-import { Package, PlusCircle, LogIn, LogOut } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 
-function Navbar() {
+import { Package, PlusCircle, SignOut, SignIn } from "phosphor-react";
+
+function Navbar({ token, handleLogout }) {
   const location = useLocation();
-  const navigate = useNavigate();
 
   const isActive = (path) => location.pathname === path;
 
-  const token = localStorage.getItem("token");
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/auth");
-  };
 
   return (
-    <nav className="bg-gray-900 text-white px-6 py-4 flex items-center justify-between shadow">
-        <Link
+    <nav className="bg-gray-900 text-white px-6 py-3 flex items-center justify-between shadow-md sticky top-0 z-50 relative overflow-hidden">
+      {/* Üst ışık çubuğu */}
+      <div className="animate-horizontal-glow" style={{
+        top: 0
+        , animationDelay: "1.5s"
+      }}></div>
+
+      {/* Alt ışık çubuğu, 1.5s gecikmeli */}
+      <div className="animate-horizontal-glow" style={{ bottom: 0, animationDelay: "1.5s" }}></div>
+      <Link
         to="/"
-        className="text-xl font-bold flex items-center gap-2 hover:opacity-80"
+        className="text-2xl font-extrabold flex items-center gap-3 text-yellow-400 hover:opacity-90 transition-opacity duration-300"
       >
-        <Package size={28} className="text-yellow-400" />
-        <span className="hidden sm:inline cursor-pointer">Ürün Yönetimi</span>
+        <Package size={30} weight="fill" />
+        <span className="hidden sm:inline cursor-pointer select-none">Ürün Yönetimi</span>
       </Link>
 
-      <div className="flex gap-6 items-center">
+      <div className="flex items-center gap-6">
         <Link
           to="/products"
-          className={`flex items-center gap-2 px-3 py-2 rounded-md transition ${
-            isActive("/products")
-              ? "bg-gray-700 text-yellow-300"
-              : "hover:bg-gray-700 hover:text-yellow-300"
-          }`}
+          className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-300 ${isActive("/products")
+              ? "bg-yellow-400 text-gray-900 font-semibold shadow-lg"
+              : "text-yellow-300 hover:bg-yellow-400 hover:text-gray-900"
+            }`}
         >
-          <Package size={20} />
-          <span className="hidden sm:inline">Ürünler</span>
+          <Package size={22} weight="duotone" />
+          <span className="hidden sm:inline select-none">Ürünler</span>
         </Link>
 
         <Link
           to="/add"
-          className={`flex items-center gap-2 px-3 py-2 rounded-md transition ${
-            isActive("/add")
-              ? "bg-gray-700 text-yellow-300"
-              : "hover:bg-gray-700 hover:text-yellow-300"
-          }`}
+          className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-300 ${isActive("/add")
+              ? "bg-yellow-400 text-gray-900 font-semibold shadow-lg"
+              : "text-yellow-300 hover:bg-yellow-400 hover:text-gray-900"
+            }`}
         >
-          <PlusCircle size={20} />
-          <span className="hidden sm:inline">Ürün Ekle</span>
+          <PlusCircle size={22} weight="duotone" />
+          <span className="hidden sm:inline select-none">Ürün Ekle</span>
         </Link>
 
         {token ? (
           <button
             onClick={handleLogout}
-            className="flex items-center gap-2 px-3 py-2 rounded-md transition bg-red-700 hover:bg-red-800"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white font-semibold transition-colors duration-300 shadow-md"
           >
-            <LogOut size={20} />
-            <span className="hidden sm:inline">Çıkış Yap</span>
+            <SignOut size={22} weight="duotone" />
+            <span className="hidden sm:inline select-none">Çıkış Yap</span>
           </button>
         ) : (
           <Link
             to="/auth"
-            className={`flex items-center gap-2 px-3 py-2 rounded-md transition ${
-              isActive("/auth")
-                ? "bg-gray-700 text-yellow-300"
-                : "hover:bg-gray-700 hover:text-yellow-300"
-            }`}
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-300 ${isActive("/auth")
+                ? "bg-yellow-400 text-gray-900 font-semibold shadow-lg"
+                : "text-yellow-300 hover:bg-yellow-400 hover:text-gray-900"
+              }`}
           >
-            <LogIn size={20} />
-            <span className="hidden sm:inline">Giriş Yap</span>
+            <SignIn size={22} weight="duotone" />
+            <span className="hidden sm:inline select-none">Giriş Yap</span>
           </Link>
         )}
       </div>
+
+
     </nav>
   );
 }
 
 export default Navbar;
+
+
+
+
+
+

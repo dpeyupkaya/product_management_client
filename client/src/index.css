@@ -1,1 +1,68 @@
 @import "tailwindcss";
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+  }
+  50% {
+    transform: translateY(-20px) translateX(10px);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.6s ease-out forwards;
+}
+
+@keyframes horizontal-glow {
+  0% {
+    left: -100%;
+    opacity: 0;
+    background: linear-gradient(90deg, rgba(255,0,150,0), rgba(255,0,150,1), rgba(255,0,150,0)); /* Neon Pink */
+    box-shadow: 0 0 10px rgba(255,0,150,0.7);
+  }
+  25% {
+    background: linear-gradient(90deg, rgba(0,255,255,0), rgba(0,255,255,1), rgba(0,255,255,0)); /* Neon Cyan */
+    box-shadow: 0 0 15px rgba(0,255,255,0.8);
+  }
+  50% {
+    left: 50%;
+    opacity: 1;
+    background: linear-gradient(90deg, rgba(255,255,0,0), rgba(255,255,0,1), rgba(255,255,0,0)); /* Neon Yellow */
+    box-shadow: 0 0 20px rgba(255,255,0,0.9);
+  }
+  75% {
+    background: linear-gradient(90deg, rgba(0,255,0,0), rgba(0,255,0,1), rgba(0,255,0,0)); /* Neon Green */
+    box-shadow: 0 0 15px rgba(0,255,0,0.8);
+  }
+  100% {
+    left: 100%;
+    opacity: 0;
+    background: linear-gradient(90deg, rgba(255,0,150,0), rgba(255,0,150,1), rgba(255,0,150,0)); /* Neon Pink */
+    box-shadow: 0 0 10px rgba(255,0,150,0.7);
+  }
+}
+
+.animate-horizontal-glow {
+  position: absolute;
+  height: 6px;
+  width: 30%;
+  border-radius: 6px;
+  animation: horizontal-glow 6s ease-in-out infinite;
+  filter: drop-shadow(0 0 8px rgba(255,0,150,0.8));
+}
+
